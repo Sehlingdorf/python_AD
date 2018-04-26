@@ -111,3 +111,9 @@ if __name__ == '__main__':
   a.tangent = 1
   c = 3/a
   print(c.value, c.tangent)
+  ###
+  a = TracerFloat(3)
+  b = TracerFloat(2)
+  a.tangent = 1
+  c = b**a
+  print(c.value, c.tangent)
