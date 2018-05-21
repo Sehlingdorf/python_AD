@@ -139,7 +139,7 @@ class TFrev:
       tmp = TFrev(tape[vac].value, from_operation=True)
       vac += 1 # this is the increment of the asignemnet
       return tmp
-    else:
+    elif not isinstance(power, TFrev):
       tape[vac].oc = TF_CONST
       tape[vac].value = power
       vac += 1
@@ -152,6 +152,7 @@ class TFrev:
       tmp = TFrev(tape[vac].value, from_operation=True)
       vac += 1 # this is the increment of the asignemnet
       return tmp
+    # other possibility is that 2 ** TF, that operation is curr not covered
     
 #---------------------------------------------------------------------------------------#
 def interpret_tape():

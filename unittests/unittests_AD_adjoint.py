@@ -1,5 +1,7 @@
 import unittest
 
+import sys
+sys.path.append('../src')
 import AD_adjoint
 
 class TestsForReverseDerivatives(unittest.TestCase):
