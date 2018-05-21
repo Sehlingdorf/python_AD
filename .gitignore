@@ -1,0 +1,7 @@
+# python
+src/__pycache__
+
+# c++
+*.o
+main
+
