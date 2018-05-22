@@ -152,7 +152,7 @@ class TFrev:
       tmp = TFrev(tape[vac].value, from_operation=True)
       vac += 1 # this is the increment of the asignemnet
       return tmp
-    # other possibility is that 2 ** TF, that operation is curr not covered
+    # other possibility is that 2(notTF) ** TF, that operation is curr not covered
     
 #---------------------------------------------------------------------------------------#
 def interpret_tape():
@@ -174,11 +174,11 @@ def interpret_tape():
         tape[tape[i].arg1].adjoint += tape[tape[i].arg2].value * tape[i].adjoint
         tape[tape[i].arg2].adjoint += tape[tape[i].arg1].value * tape[i].adjoint
         
-      elif tape[i].oc == TF_POW:
+      elif tape[i].oc == TF_POW: # fails if tape[tape[i].arg1].value is negative
         # c=a^b - dc/da
         tape[tape[i].arg1].adjoint += tape[tape[i].arg2].value * tape[tape[i].arg1].value ** (tape[tape[i].arg2].value-1) * tape[i].adjoint
         # c=a^b - dc/db
-        tape[tape[i].arg2].adjoint += tape[tape[i].arg1].value ** tape[tape[i].arg2].value * math.log(tape[tape[i].arg2].value) * tape[i].adjoint
+        tape[tape[i].arg2].adjoint += tape[tape[i].arg1].value ** tape[tape[i].arg2].value * math.log(tape[tape[i].arg1].value) * tape[i].adjoint
 
       elif tape[i].oc == TF_EXP:
         pass
