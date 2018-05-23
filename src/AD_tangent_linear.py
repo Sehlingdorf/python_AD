@@ -1,7 +1,9 @@
 import math
 
 #---------------------------------------------------------------------------------------#
-class TracerFloat:
+class TFfor:
+  """Tracer Float forward."""
+
   def __init__(self, value):
     self.value = value  
     self.tangent = 0
@@ -13,8 +15,8 @@ class TracerFloat:
     return str(self.value)
 #---------------------------------------------------------------------------------------#
   def __add__(self, other):
-    tmp = TracerFloat(None)
-    if isinstance(other, TracerFloat):
+    tmp = TFfor(None)
+    if isinstance(other, TFfor):
       tmp.value = self.value + other.value
       tmp.tangent = self.tangent + other.tangent
       return tmp
@@ -34,8 +36,8 @@ class TracerFloat:
 
 #---------------------------------------------------------------------------------------#
   def __mul__(self, other):
-    tmp = TracerFloat(None)
-    if isinstance(other, TracerFloat):
+    tmp = TFfor(None)
+    if isinstance(other, TFfor):
       tmp.value = self.value * other.value
       tmp.tangent = self.tangent * other.value + self.value * other.tangent
       return tmp
@@ -58,8 +60,8 @@ class TracerFloat:
 
   def __pow__(self, power):
     """d/dx f(x)^g(x) = g'*ln(f)*f^g + g*f'*f^(g-1)""" 
-    tmp = TracerFloat(None)
-    if isinstance(power, TracerFloat):
+    tmp = TFfor(None)
+    if isinstance(power, TFfor):
       tmp.value = self.value ** power.value
       tmp.tangent = power.tangent*math.log(self.value)*self.value**power.value + power.value*self.tangent*self.value**(power.value-1)
       return tmp
@@ -69,51 +71,30 @@ class TracerFloat:
       return tmp
       
   def sin(self):
-    tmp = TracerFloat(None)
+    tmp = TFfor(None)
     tmp.value = math.sin(self.value)
     tmp.tangent = math.cos(self.value) * self.tangent
     return tmp
 
+  def cos(self):
+    tmp = TFfor(None)
+    tmp.value = math.cos(self.value)
+    tmp.tangent = -math.sin(self.value) * self.tangent
+    return tmp
+
   def exp(self):
-    tmp = TracerFloat(None)
+    tmp = TFfor(None)
     tmp.value = math.exp(self.value)
     tmp.tangent = math.exp(self.value) * self.tangent
     return tmp 
+
+  def log(self):
+    
+    tmp = TFfor(None)
+    tmp.value = math.log(self.value)
+    tmp.tangent = 1/self.value * self.tangent
+    return tmp 
+    
 #---------------------------------------------------------------------------------------#
 if __name__ == '__main__':
-  a = TracerFloat(2)
-  b = TracerFloat(3)
-  p = TracerFloat(2)
-
-  a.tangent = 1
-
-  c = (a**p)*b+2
-  print(c.value, c.tangent)
-  ###
-  a = TracerFloat(0)
-  a.tangent = 1
-
-  b = TracerFloat.exp(a)
-  print(b.value, b.tangent)
-  ###
-  a = TracerFloat(2)
-  c = TracerFloat(3)
-  a.tangent = 1
-  b = a**c
-  print(b.value, b.tangent)
-  ###
-  a  = TracerFloat(2)
-  a.tangent = 1
-  c = a/3
-  print(c.value, c.tangent)
-  ###
-  a  = TracerFloat(2)
-  a.tangent = 1
-  c = 3/a
-  print(c.value, c.tangent)
-  ###
-  a = TracerFloat(3)
-  b = TracerFloat(2)
-  a.tangent = 1
-  c = b**a
-  print(c.value, c.tangent)
+  pass
