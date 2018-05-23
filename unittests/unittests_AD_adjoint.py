@@ -87,8 +87,8 @@ class TestsReverseDerivatives_Functions(unittest.TestCase):
     n=3
     input = [AD.TFrev(1, is_input=True) for i in range(n)]
     output = AD.TFrev(0, is_input=True)
-    func(input,output)
-    gradient = AD.get_gradient(input)
+    output = func(input,output)
+    gradient = AD.get_gradient(input, output)
     analytical_solution = [1./3.**0.5, 1./3.**0.5, 1./3.**0.5]
     self.assertTrue(np.allclose(gradient, analytical_solution))
 
@@ -103,8 +103,8 @@ class TestsReverseDerivatives_Functions(unittest.TestCase):
     n=4
     input = [AD.TFrev(1, is_input=True) for i in range(n)]
     output = AD.TFrev(0, is_input=True)
-    func(input,output)
-    gradient = AD.get_gradient(input)
+    output = func(input,output)
+    gradient = AD.get_gradient(input, output)
     analytical_solution = [16, 16, 16, 16]
     self.assertEqual(gradient, analytical_solution)
 
